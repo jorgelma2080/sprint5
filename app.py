@@ -3,10 +3,13 @@ import pandas as pd
 import plotly_express as px
 import plotly.graph_objects as go
 
+#read CSV
+
 car_data = pd.read_csv('notebooks/vehicles_us.csv')
 st.header('US Vehicles')
 st.write('This is a demo of a data science web application by Jorge Mora')
 
+#show the Dataframe
 st.header('Data viewer')
 table_check= st.checkbox('Show ramdon 1000 vechicles' ,True)
 
@@ -24,12 +27,16 @@ for brand in car_data['model']:
     brand_list.append(brand_name[0])
 car_data['brand']=brand_list
 
+#show the histogram  brand vs type
+
 figpx = px.histogram(car_data,
                      x='brand',
                      color='type'
                      )
 
 st.plotly_chart(figpx,use_container_width=True)
+
+#comparation condition vs year
 
 st.header('Condition vs Year')
 car_data['brand']=brand_list
@@ -40,9 +47,9 @@ figpx = px.histogram(car_data,
                      )
 st.plotly_chart(figpx,use_container_width=True)
 
-st.header('Compare price distribution')
-#st.write(car_data['brand'].value_counts().index)
+#compare the price vs Manufacturer with 2 selectbox
 
+st.header('Compare price and Manufacturer')
 manufacturer_1 = st.selectbox('Selec the manufacturer 1: ',
                               (car_data['brand'].value_counts().index),
                               index=None,placeholder='Select brand')
