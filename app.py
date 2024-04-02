@@ -5,7 +5,7 @@ import plotly.graph_objects as go
 
 car_data = pd.read_csv('notebooks/vehicles_us.csv')
 st.header('US Vehicles')
-st.write('This is a demo of a data science web application')
+st.write('This is a demo of a data science web application by Jorge Mora')
 
 st.header('Data viewer')
 table_check= st.checkbox('Show ramdon 1000 vechicles' ,True)
@@ -40,25 +40,23 @@ figpx = px.histogram(car_data,
                      )
 st.plotly_chart(figpx,use_container_width=True)
 
+st.header('Compare price distribution')
+#st.write(car_data['brand'].value_counts().index)
+
+manufacturer_1 = st.selectbox('Selec the manufacturer 1: ',
+                              (car_data['brand'].value_counts().index),
+                              index=None,placeholder='Select brand')
                        
-'''
-vehicle_by_bran=car_data.
-fig = go.Figure()
-
-for col in cols:
-    figpx = px.scatter(df.assign(Plot=col),
-                       x=col,
-                       y="Score",
-                       size="Population",
-                       color="Continent",
-                       hover_name="Country/Region",
-                       hover_data=["Plot"],
-                       size_max=60,
-                       color_discrete_sequence=px.colors.qualitative.G10).update_traces(visible=False)
-    
-    fig.add_traces(figpx.data)
-
-'''
+manufacturer_2 = st.selectbox('Selec the manufacturer 2: ',
+                              (car_data['brand'].value_counts().index),
+                              index=None,placeholder='Select brand')
+                       
+figpx = px.histogram(car_data[car_data['brand'].isin([manufacturer_1,manufacturer_2])],
+                     x='price',
+                     color='brand',
+                     nbins=40
+                     )
+st.plotly_chart(figpx,use_container_width=True)
 
 
 
